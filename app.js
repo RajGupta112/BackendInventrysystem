@@ -19,8 +19,7 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow Postman / server-to-server
-      if (!origin) return callback(null, true);
+      if (!origin) return callback(null, true); // Postman / server-to-server
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
@@ -32,8 +31,8 @@ app.use(
   })
 );
 
-// ✅ THIS LINE FIXES YOUR ERROR
-app.options('*', cors());
+// ✅ EXPRESS 5 SAFE PREFLIGHT HANDLER
+app.options(/.*/, cors());
 
 app.use(express.json());
 

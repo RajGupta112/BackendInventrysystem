@@ -10,12 +10,23 @@ import inventoryRoutes from './routes/inventoryRoutes.js';
 dotenv.config();
 
 const app = express();
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://inventory-frontend-zeta-five.vercel.app',
+];
+
 app.use(
   cors({
-    origin: [
-      'http://localhost:5173',                 // local d
-      process.env.FRONTEND_URL,               // 
-    ],
+    origin: function (origin, callback) {
+     
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );

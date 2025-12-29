@@ -10,10 +10,12 @@ import inventoryRoutes from './routes/inventoryRoutes.js';
 dotenv.config();
 
 const app = express();
-
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',                 // local d
+      process.env.FRONTEND_URL,               // 
+    ],
     credentials: true,
   })
 );
